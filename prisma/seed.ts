@@ -11,7 +11,7 @@ type Book = {
   datePublished: Date;
 };
 
-async function seed() {
+export async function seed() {
   await Promise.all(
     getAuthors().map((author) => {
       return db.author.create({

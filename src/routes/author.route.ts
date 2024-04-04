@@ -6,15 +6,25 @@ import {
   getAuthorsHandler,
   updateAuthorHandler,
 } from "../controllers/author.controller";
+import { validator } from "../utils/validator";
+import {
+  CreateAuthorSchema,
+  DeleteAuthorSchema,
+  ReadAuthorSchema,
+  UpdateAuthorSchema,
+} from "../schema/author.schema";
 
 const authorRouter = express.Router();
 
-authorRouter.route("/authors").post(createAuthorHandler).get(getAuthorsHandler);
+authorRouter
+  .route("/")
+  .post(validator(CreateAuthorSchema), createAuthorHandler)
+  .get(getAuthorsHandler);
 
 authorRouter
-  .route("/authors/:authorId")
-  .get(getAuthorHandler)
-  .put(updateAuthorHandler)
-  .delete(deleteAuthorHandler);
+  .route("/:authorId")
+  .get(validator(ReadAuthorSchema), getAuthorHandler)
+  .put(validator(UpdateAuthorSchema), updateAuthorHandler)
+  .delete(validator(DeleteAuthorSchema), deleteAuthorHandler);
 
 export default authorRouter;

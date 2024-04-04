@@ -1,9 +1,10 @@
+import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
-import cors from "cors";
-import authorRouter from "./routes/author.route";
-import notFoundHandler from "./middlewares/notFound";
 import errorHandler from "./middlewares/error";
+import notFoundHandler from "./middlewares/notFound";
+import authorRouter from "./routes/author.route";
+import { bookRouter } from "./routes/book.route";
 
 dotenv.config();
 
@@ -13,7 +14,8 @@ app.use(cors());
 app.use(express.json());
 
 // start of routes
-app.use("/api/v1", authorRouter);
+app.use("/api/v1/authors", authorRouter);
+app.use("/api/v1/books", bookRouter);
 
 app.use("*", notFoundHandler);
 app.use("*", errorHandler);
